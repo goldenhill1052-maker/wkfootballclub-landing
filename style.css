@@ -250,3 +250,12 @@ body {
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 768px) {
+  .hero_text h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero_text p {
+    font-size: 1rem;
+  }
+}
