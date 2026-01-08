@@ -250,12 +250,12 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.hero_text h1 {
+  line-height: 1.25; /* PC 기본 */
+}
+
 @media (max-width: 768px) {
   .hero_text h1 {
-    font-size: 1.8rem;
-  }
-
-  .hero_text p {
-    font-size: 1rem;
+    line-height: 1.35; /* 모바일에서 살짝 여유 */
   }
 }
