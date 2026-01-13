@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>경기 요약 리포트 | WKfootballclub</title>
+    <meta
+      name="description"
+      content="아마추어 맞춤 경기 요약 리포트 (공유용)"
+    />
+
+    <!-- 공유/미리보기(선택): 이미지가 있으면 OG 이미지 경로만 바꿔서 쓰세요 -->
+    <!--
+  <meta property="og:title" content="경기 요약 리포트 | WKfootballclub" />
+  <meta property="og:description" content="아마추어 맞춤 경기 요약 리포트 (공유용)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./og-image.png" />
+  -->
+
+    <style>
+      :root {
+        --bg: #0b0d12;
+        --card: #111522;
+        --text: #e9ecf1;
+        --muted: #a9b0bd;
+        --line: #232a3a;
+        --accent: #6aa6ff;
+        --chip: #172033;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        --radius: 18px;
+        --max: 860px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial,
+          sans-serif;
+        background: radial-gradient(
+            1200px 700px at 30% -10%,
+            rgba(106, 166, 255, 0.25),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 600px at 90% 10%,
+            rgba(120, 255, 214, 0.12),
+            transparent 55%
+          ),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 28px 18px 60px;
+      }
+      .topbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .brand {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 99px;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(106, 166, 255, 0.18);
+      }
+      .pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid var(--line);
+        background: rgba(17, 21, 34, 0.7);
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .hero {
+        padding: 22px 22px 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(17, 21, 34, 0.55);
+      }
+      .title {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.2px;
+      }
+      .subtitle {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 18px 18px 22px;
+      }
+      .section {
+        border: 1px solid var(--line);
+        background: rgba(17, 21, 34, 0.55);
+        border-radius: 14px;
+        padding: 16px 16px 14px;
+      }
+      .h {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 10px;
+        font-size: 15px;
+        letter-spacing: -0.1px;
+      }
+      .tag {
+        background: var(--chip);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .text {
+        margin: 0;
+        color: var(--text);
+        font-size: 15px;
+        white-space: pre-wrap; /* 복붙 텍스트 줄바꿈 유지 */
+        word-break: keep-all;
+      }
+      ul {
+        margin: 0;
+        padding: 0 0 0 18px;
+        color: var(--text);
+      }
+      li {
+        margin: 7px 0;
+        color: var(--text);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .footer {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+        padding: 14px 2px 0;
+      }
+      .print {
+        border: 1px solid var(--line);
+        background: rgba(17, 21, 34, 0.6);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+      .print:hover {
+        border-color: rgba(106, 166, 255, 0.5);
+      }
+
+      /* 프린트/PDF 최적화 */
+      @media print {
+        body {
+          background: #fff;
+          color: #111;
+        }
+        .wrap {
+          padding: 0;
+          max-width: 100%;
+        }
+        .topbar,
+        .footer .print {
+          display: none !important;
+        }
+        .card,
+        .section {
+          box-shadow: none;
+          background: #fff;
+          border-color: #ddd;
+        }
+        .subtitle,
+        .muted,
+        .tag {
+          color: #555;
+        }
+        a {
+          color: #111;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <span class="dot"></span>
+          <span>WKfootballclub</span>
+        </div>
+        <div class="pill" title="이 페이지는 공유 링크용 단독 리포트입니다.">
+          공유용 리포트 · 복붙/프린트 OK
+        </div>
+      </div>
+
+      <article class="card">
+        <header class="hero">
+          <h1 class="title">경기 요약 리포트</h1>
+          <p class="subtitle">
+            <span class="muted">선수:</span> (이름/닉네임) ·
+            <span class="muted">포지션:</span> (예: CM) ·
+            <span class="muted">경기:</span> (풋살/축구) ·
+            <span class="muted">날짜:</span> (YYYY-MM-DD)
+          </p>
+        </header>
+
+        <div class="grid">
+          <!-- 1) 한 줄 요약 -->
+          <section class="section">
+            <h2 class="h">
+              <span>1️⃣ 오늘 경기 한 줄 요약</span>
+              <span class="tag">핵심만</span>
+            </h2>
+            <p class="text">
+              여기에 AI Studio 결과를 그대로 붙여넣으세요. (한 문장 또는 2~3줄)
+            </p>
+          </section>
+
+          <!-- 2) 잘한 판단 TOP 3 -->
+          <section class="section">
+            <h2 class="h">
+              <span>2️⃣ 잘한 판단 TOP 3</span>
+              <span class="tag">유지할 것</span>
+            </h2>
+            <ul>
+              <li>항목 1 (왜 좋은 판단이었는지 한 줄)</li>
+              <li>항목 2</li>
+              <li>항목 3</li>
+            </ul>
+          </section>
+
+          <!-- 3) 개선 포인트 TOP 2 -->
+          <section class="section">
+            <h2 class="h">
+              <span>3️⃣ 개선하면 좋을 판단 TOP 2</span>
+              <span class="tag">다음엔 이렇게</span>
+            </h2>
+            <ul>
+              <li>항목 1 (비판 없이 “다음엔 ~해보자” 톤)</li>
+              <li>항목 2</li>
+            </ul>
+          </section>
+
+          <!-- 4) 다음 경기 미션 1가지 -->
+          <section class="section">
+            <h2 class="h">
+              <span>4️⃣ 다음 경기 미션 1가지</span>
+              <span class="tag">하나만</span>
+            </h2>
+            <p class="text">
+              예) 볼 받기 전 “왼쪽 어깨 체크 2번”을 습관처럼 해보기
+            </p>
+          </section>
+
+          <!-- 옵션: 자유 메모 -->
+          <section class="section">
+            <h2 class="h">
+              <span>📝 메모</span>
+              <span class="tag">선택</span>
+            </h2>
+            <p class="text muted">
+              (필요하면) 경기 상황 / 다음 목표 / 컨디션 등을 간단히 적어두세요.
+            </p>
+          </section>
+        </div>
+      </article>
+
+      <div class="footer">
+        <div class="muted">
+          © WKfootballclub · 이 페이지는 외부 공유용 단독 리포트입니다.
+        </div>
+        <button class="print" onclick="window.print()">
+          PDF로 저장 / 인쇄
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
